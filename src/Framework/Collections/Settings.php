@@ -71,7 +71,7 @@
          *
          * @param $name
          *
-         * @throws Exception
+         * @throws Exceptions
          */
 
         public static function deleteSetting( $name )
@@ -95,7 +95,7 @@
          *
          * @param $value
          *
-         * @throws Exception
+         * @throws Exceptions
          */
 
         public static function addSetting( $name, $value )
@@ -115,7 +115,7 @@
         /**
          * Saves our settings
          *
-         * @throws Exception
+         * @throws Exceptions
          */
 
         private static function saveSettings()
@@ -137,7 +137,7 @@
          *
          * @return mixed
          *
-         * @throws Exception
+         * @throws Exceptions
          */
 
         private static function readSettings()

@@ -96,7 +96,7 @@
             if( $this->isJson() == false )
             {
 
-                throw new Exception('File needs to be a valid json type in order to convert to object');
+                throw new Exception('File needs to be a valid json type in order to convert to array');
             }
 
             return json_decode( $this->read(), true );

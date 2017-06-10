@@ -26,7 +26,7 @@
          *
          * @param null $key
          *
-         * @throws Exception
+         * @throws Exceptions
          */
 
         public function __construct( $key = null )

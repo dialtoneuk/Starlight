@@ -13,6 +13,7 @@
     use Flight;
     use ReflectionClass;
     use ReflectionMethod;
+    use Starlight\Framework\Collections\Exceptions as ErrorHandler;
     use Starlight\Framework\Collections\Settings;
 
     class Manager
@@ -31,6 +32,20 @@
             {
 
                 throw new Exception('Failed to load settings');
+            }
+
+            if( Settings::getSetting('flight.map.error') == true )
+            {
+
+                Flight::map('error', function( Exception $exception )
+                {
+
+                    $error = new ErrorHandler();
+
+                    $error->handleException( $exception );
+
+                    echo $exception->getTraceAsString();
+                });
             }
 
             if( Settings::getSetting('flight.auto') == true )

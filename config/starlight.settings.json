@@ -5,5 +5,8 @@
   "views.location":"/src/Application/Views/",
   "views.namespace":"Starlight\\Application\\Views\\",
   "developer.disabled":false,
-  "flight.auto": true
+  "flight.auto": true,
+  "flight.map.error": true,
+  "exceptions.log.enabled": true,
+  "exceptions.log.location":"/config/exception.log.json"
 }

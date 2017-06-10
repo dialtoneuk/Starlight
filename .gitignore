@@ -6,6 +6,7 @@ composer.phar
 # Starlight
 
 /config/database.connection.json
+/config/exception.log.json
 
 # PHPStorm
 

@@ -9,10 +9,11 @@
      * @package Starlight\Framework\Collections\Database
      */
 
+    use Exception;
     use Illuminate\Database\Capsule\Manager as Database;
+    use Starlight\Framework\Collections\Encryption;
     use Starlight\Framework\Collections\IO\File;
     use Starlight\Framework\Collections\Settings;
-    use Exception;
 
     class Connection
     {
@@ -103,6 +104,30 @@
             {
 
                 throw new Exception('Connection file is in incorrect format');
+            }
+
+            //If we currently have database encryption set, lets decrypt our connection file
+
+            if( Settings::getSetting('database.encryption') == true )
+            {
+
+                $data = $file->toArray();
+
+                if( empty( $data ) )
+                {
+
+                    throw new Exception('Cannot decrypt an empty array');
+                }
+
+                if( isset( $data['key'] ) == false || isset( $data['iv'] ) == false )
+                {
+
+                    throw new Exception('Missing information in array');
+                }
+
+                $encryption = new Encryption( $data['key'] );
+
+                return $encryption->decryptArray( $data, $data['iv'] );
             }
 
             return $file->toArray();

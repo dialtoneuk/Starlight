@@ -1,3 +1,9 @@
 {
-  "database.connection.file":"/config/database.connection.json"
+  "database.connection.file":"/config/database.connection.json",
+  "database.encryption":false,
+  "encryption.method":"AES-256-CBC",
+  "views.location":"/src/Application/Views/",
+  "views.namespace":"Starlight\\Application\\Views\\",
+  "developer.disabled":false,
+  "flight.auto": true
 }

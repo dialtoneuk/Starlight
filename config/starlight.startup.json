@@ -1,4 +1,5 @@
 {
   "Starlight\\Framework\\Collections\\Settings":"load",
-  "Starlight\\Framework\\Collections\\Database\\Connection":"create"
+  "Starlight\\Framework\\Collections\\Database\\Connection":"create",
+  "Starlight\\Framework\\Collections\\Views\\Controller":"load"
 }

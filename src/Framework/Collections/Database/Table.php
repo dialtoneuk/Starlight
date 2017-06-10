@@ -9,8 +9,8 @@
      * @package Starlight\Framework\Collections\Database
      */
 
-    use ReflectionClass;
     use Exception;
+    use ReflectionClass;
 
     class Table
     {
@@ -36,12 +36,6 @@
             {
 
                 throw new Exception('Database currently does not have a connection');
-            }
-
-            if( @$this->table() == false )
-            {
-
-                throw new Exception('Table ' . $this->getShortName() . ' does not exist in your mysql database');
             }
 
             $this->database = Connection::getCapsule();

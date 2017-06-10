@@ -10,8 +10,10 @@
      */
 
     use Exception;
+    use Flight;
     use ReflectionClass;
     use ReflectionMethod;
+    use Starlight\Framework\Collections\Settings;
 
     class Manager
     {
@@ -23,9 +25,19 @@
         public static function start()
         {
 
-            //Load and execute the various startup methods
-
             self::doStartup();
+
+            if( empty( Settings::$settings ) )
+            {
+
+                throw new Exception('Failed to load settings');
+            }
+
+            if( Settings::getSetting('flight.auto') == true )
+            {
+
+                Flight::start();
+            }
         }
 
         /**

@@ -9,8 +9,8 @@
      * @package Starlight\Framework\Collections\IO
      */
 
-    use stdClass;
     use Exception;
+    use stdClass;
 
     class Directory
     {
@@ -52,7 +52,7 @@
          *
          * @param string $suffix
          *
-         * @return stdClass
+         * @return stdClass|File
          *
          * @throws Exception
          */

@@ -1,0 +1,4 @@
+{
+  "Starlight\\Framework\\Collections\\Settings":"load",
+  "Starlight\\Framework\\Collections\\Database\\Connection":"create"
+}

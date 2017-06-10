@@ -1,0 +1,13 @@
+# Composer
+
+composer.phar
+/vendor/
+
+# Starlight
+
+/config/database.connection.json
+
+# PHPStorm
+
+/.idea/
+

@@ -86,6 +86,12 @@
             if( Settings::getSetting('flight.auto') == true )
             {
 
+                if( Settings::getSetting('flight.views.custom') == true )
+                {
+
+                    Flight::set('flight.views.path', Settings::getSetting('flight.views.path') );
+                }
+
                 Flight::start();
             }
         }

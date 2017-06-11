@@ -80,6 +80,36 @@
         }
 
         /**
+         * Gets all of the files inside this dir
+         *
+         * @return stdClass
+         *
+         * @throws Exception
+         */
+
+        public function getContents()
+        {
+
+            $files = glob( $this->getRealPath() . "*" );
+
+            if( empty( $files ) )
+            {
+
+                throw new Exception('Directory is empty');
+            }
+
+            $classes = new stdClass();
+
+            foreach( $files as $file )
+            {
+
+                $classes->{ explode('.', $file )[0] } = new File( explode( STARLIGHT_FILE_PATH , $file )[1] );
+            }
+
+            return $classes;
+        }
+
+        /**
          * Gets the directories inside this directory
          *
          * @return stdClass
@@ -127,6 +157,92 @@
             }
 
             return true;
+        }
+
+        /**
+         * Creates a file inside this directory
+         *
+         * @param $file
+         *
+         * @param null $data
+         *
+         * @return File
+         *
+         * @throws Exception
+         */
+
+        public function create( $file, $data=null )
+        {
+
+            file_put_contents( $this->getRealPath() . $file, $data );
+
+            if( file_exists( $this->getRealPath() . $file ) == false )
+            {
+
+                throw new Exception('Failed to create file possibly due to a permissions error');
+            }
+
+            return new File( $this->directory . $file );
+        }
+
+        /**
+         * Checks if a file exists in this directory
+         *
+         * @param $file
+         *
+         * @return bool
+         */
+
+        public function exists( $file )
+        {
+
+            if( file_exists( $this->getRealPath() . $file ) == false )
+            {
+
+                return false;
+            }
+
+            return true;
+        }
+
+        /**
+         * Deletes this directory
+         */
+
+        public function delete()
+        {
+
+            rmdir( $this->getRealPath() );
+        }
+
+        /**
+         * Deletes a file inside this dir
+         *
+         * @param $file
+         */
+
+        public function deleteFile( $file )
+        {
+
+            unlink( $this->getRealPath() . $file );
+        }
+
+        /**
+         * Deletes all the files in a directory with out removing the directory
+         */
+
+        public function clear()
+        {
+
+            $files = $this->getContents();
+
+            /** @var File $file */
+
+            foreach($files as $file )
+            {
+
+                $file->delete();
+            }
         }
 
         /**

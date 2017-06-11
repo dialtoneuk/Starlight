@@ -151,6 +151,16 @@
         }
 
         /**
+         * Deletes the file
+         */
+
+        public function delete()
+        {
+
+            unlink( $this->getRealPath() );
+        }
+
+        /**
          * Gets the size of a file
          *
          * @return int
@@ -172,6 +182,18 @@
         {
 
             return explode('.', basename( $this->getRealPath() ) )[0];
+        }
+
+        /**
+         * Gets the file name with the extension
+         *
+         * @return string
+         */
+
+        public function getFileNameWithExtension()
+        {
+
+            return basename( $this->getRealPath() );
         }
 
         /**

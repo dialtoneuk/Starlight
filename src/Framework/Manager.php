@@ -13,11 +13,26 @@
     use Flight;
     use ReflectionClass;
     use ReflectionMethod;
-    use Starlight\Framework\Collections\Exceptions as ErrorHandler;
+    use Starlight\Framework\Collections\Container;
+    use Starlight\Framework\Collections\Exceptions;
     use Starlight\Framework\Collections\Settings;
+    use Starlight\Framework\Collections\Views\Controller;
+    use stdClass;
 
     class Manager
     {
+
+        /**
+         * @var Container
+         */
+
+        public static $container;
+
+        /**
+         * @var int
+         */
+
+        public static $state = 0;
 
         /**
          * Starts the framework
@@ -34,19 +49,39 @@
                 throw new Exception('Failed to load settings');
             }
 
-            if( Settings::getSetting('flight.map.error') == true )
+            if( Settings::getSetting('starlight.container') == true )
             {
 
-                Flight::map('error', function( Exception $exception )
+                self::$container = new Container();
+            }
+
+            if( Settings::getSetting('flight.error.map') == true )
+            {
+
+                $exceptionhandler = new Exceptions();
+
+                if( Settings::getSetting('starlight.container') == true )
                 {
 
-                    $error = new ErrorHandler();
+                    self::$container->exceptions = $exceptionhandler;
+                }
 
-                    $error->handleException( $exception );
+                Flight::map('error', function( Exception $exception ) use ( $exceptionhandler )
+                {
 
-                    echo $exception->getTraceAsString();
+                    $exceptionhandler->handleException( $exception );
+
+                    if( Settings::getSetting('flight.error.halt') == true )
+                    {
+
+                        Flight::halt(503,'Error');
+                    }
+
+                    Flight::redirect( Settings::getSetting('flight.error.page') );
                 });
             }
+
+            self::$state = 1;
 
             if( Settings::getSetting('flight.auto') == true )
             {
@@ -61,7 +96,7 @@
          * @throws Exception
          */
 
-        private static function doStartup()
+        public static function doStartup()
         {
 
             $methods = self::getStartupMethods();
@@ -98,6 +133,92 @@
                     call_user_func( array( new $key, $value ) );
                 }
             }
+        }
+
+        /**
+         * Adds a value to the container
+         *
+         * @param $name
+         *
+         * @param $class
+         */
+
+        public static function addToContainer( $name, $class )
+        {
+
+            self::$container->$name = $class;
+        }
+
+        /**
+         * Returns true if we have this container property
+         *
+         * @param $name
+         *
+         * @return bool
+         */
+
+        public static function hasContainerProperty( $name )
+        {
+
+            return isset( self::$container->$name );
+        }
+
+        /**
+         * Stops the framework
+         *
+         * @throws Exception
+         */
+
+        public static function stop()
+        {
+
+            if( self::$state == 0 )
+            {
+
+                throw new Exception('Starlight cannot be stopped if it has not even begun');
+            }
+
+            self::$container->clear();
+
+            if( Settings::getSetting('views.clear') == true )
+            {
+
+                Controller::clear();
+            }
+
+            Settings::$settings = new stdClass();
+
+            self::$state = 0;
+        }
+
+        /**
+         * Restarts the framework
+         */
+
+        public static function restart()
+        {
+
+            self::stop();
+
+            self::start();
+        }
+
+        /**
+         * Returns true if the framework is currently running
+         *
+         * @return bool
+         */
+
+        public static function running()
+        {
+
+            if( self::$state == 0 )
+            {
+
+                return false;
+            }
+
+            return true;
         }
 
         /**

@@ -4,9 +4,13 @@
   "encryption.method":"AES-256-CBC",
   "views.location":"/src/Application/Views/",
   "views.namespace":"Starlight\\Application\\Views\\",
+  "views.clear": true,
+  "starlight.container": true,
   "developer.disabled":false,
   "flight.auto": true,
-  "flight.map.error": true,
+  "flight.error.map": true,
+  "flight.error.halt": false,
+  "flight.error.page":"/exceptions/",
   "exceptions.log.enabled": true,
   "exceptions.log.location":"/config/exception.log.json"
 }

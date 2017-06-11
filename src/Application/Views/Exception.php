@@ -10,19 +10,11 @@
      */
 
     use Flight;
-    use Starlight\Framework\Collections\Exceptions;
     use Starlight\Framework\Collections\Views\Structures\View;
+    use Starlight\Framework\Manager;
 
     class Exception implements View
     {
-
-        protected $exception;
-
-        public function __construct()
-        {
-
-            $this->exception = new Exceptions();
-        }
 
         public function routes()
         {
@@ -35,12 +27,12 @@
         public function index()
         {
 
-            if( empty( $this->exception->exceptions ) )
+            if( Manager::hasContainerProperty('exceptions') == false )
             {
 
                 Flight::notFound();
             }
 
-            print_r( end( $this->exception->exceptions )['trace'] );
+            print_r( end( Manager::$container->exceptions->exceptions )['trace'] );
         }
     }

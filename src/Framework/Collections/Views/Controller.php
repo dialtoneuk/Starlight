@@ -147,6 +147,18 @@
         }
 
         /**
+         * Clears the controller
+         */
+
+        public static function clear()
+        {
+
+            self::$routes = [];
+
+            self::$classes = [];
+        }
+
+        /**
          * Returns a class depending on its name
          *
          * @param $name

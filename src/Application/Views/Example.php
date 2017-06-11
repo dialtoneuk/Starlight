@@ -9,7 +9,6 @@
      * @package Framework\Application\Views
      */
 
-    use Exception;
     use Starlight\Framework\Collections\Views\Structures\View;
 
     class Example implements View
@@ -37,6 +36,6 @@
         public function test()
         {
 
-            throw new Exception('test');
+            die('ye bro');
         }
     }
